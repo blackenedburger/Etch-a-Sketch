@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Etch A Sketch</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+</head>
+<body>
+    <style>
+        * { 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body,html {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+
+        }
+
+        html{
+            height: 100%;
+        }
+
+        body { 
+            min-height: 100vh; 
+            min-width: 100vw;
+        }
+
+        #container{
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: auto;
+            width: 90%;
+            height: 600px;
+        }
+
+        div{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+        }
+
+        .changingRow{
+            display:flex;
+            flex-direction: column;
+            align-self: center;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .changingDiv{
+
+            background-color:rosybrown;
+            border:3px solid; 
+            flex-grow: 1;
+            height: 100%;
+            width: 100%;
+        }
+
+        button{
+            width:70px;
+            height: 50px;
+            margin: 20px;
+        }
+
+        .mouseOver{
+            background-color: blue;
+        }
+
+        .mouseOut{
+            background-color: black;
+        }
+</style>
+
+
+
+
+
+
+    <div id="container">
+        <div id="button">
+            <button>Reset</button>
+        </div>
+        <div id="main"></div>
+    </div>
+    
+<!--.changingDiv:hover {
+        background-color: yellow;
+        }
+-->
+
+
+
+
+
+<script>
+
+const main = document.getElementById("main");
+let number = prompt("how many squares would you like to play with? ");
+let arrayRowColumn = [];
+let divArray = []
+let changingRow;
+let changingDiv;
+
+// pushes how many divs are wanted into an empty array 
+for (let i = 0; i < number; i++){
+    arrayRowColumn.push(number)
+}
+
+// goes thru the array and creates divRows and then goes thru the loop and creates divs in each row
+for (let i in arrayRowColumn){
+    createRow();
+        for (let i = 0; i < number; i++){
+        createDiv();
+    }
+}
+
+// creates an individual div piece
+function createDiv(){
+    changingDiv = document.createElement("div");
+    changingDiv.setAttribute('class', 'changingDiv');
+    changingRow.appendChild(changingDiv);
+    console.log(changingDiv.length)
+    divArray.push(changingDiv) //pushes each div creation into an array called changingDiv   
+    for (let i = 0; i < divArray.length; i++){
+        divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
+        changingDiv.addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
+
+    }
+}
+
+// creates the verticle divs to hold the individual divs
+function createRow(){
+    changingRow = document.createElement("div");
+    changingRow.setAttribute('class', 'changingRow');
+    main.appendChild(changingRow);
+    //changingRow.setAttribute('style','background-color:blue;border:3px solid; width:auto;height:auto;');
+    
+}
+
+
+
+
+
+
+
+console.log(changingDiv)
+console.log(divArray)
+//changingDiv.addEventListener("mouseover", mouseOver, false);
+//console.log(changingDiv.length)
+//changingDiv.addEventListener("mouseout", mouseOut, false);
+//changingDiv.addEventListener('mouseover', e => e.target.classList.add('my-colour-class'))
+function mouseOver() {
+    changingDiv.style.color = "red";
+}
+
+function mouseOut() {
+    changingDiv.style.color = "blue";
+}
+
+
+
+
+
+
+
+
+
+
+
+console.log(changingDiv)
+//changingDiv.addEventListener("mouseover", mouseOver, false);
+//console.log(changingDiv.length)
+//changingDiv.addEventListener("mouseout", mouseOut, false);
+
+
+
+
+
+</script>
+
+</body>
+</html>
