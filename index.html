@@ -72,7 +72,7 @@
         }
 
         button{
-            width:70px;
+            width:50px;
             height: 50px;
             margin: 20px;
         }
@@ -93,104 +93,94 @@
 
     <div id="container">
         <div id="button">
-            <button>Reset</button>
+            <button id="resetButton" onclick="resetBoard()">Reset</button>
         </div>
         <div id="main"></div>
     </div>
     
-<!--.changingDiv:hover {
-        background-color: yellow;
-        }
--->
-
 
 
 
 
 <script>
+function board(){
+    const main = document.getElementById("main");
+    let number = prompt("how many squares would you like to play with? ");
+    let arrayRowColumn = [];
+    let divArray = []
+    let changingRow;
+    let changingDiv;
+    let mainDiv = document.getElementById("main");
+    const resetButton = document.getElementById("resetButton");
+    let allRows = document.querySelectorAll(".changingRow");
+    let allDivs = document.querySelectorAll(".changingDiv"); 
+    boardSetup();
 
-const main = document.getElementById("main");
-let number = prompt("how many squares would you like to play with? ");
-let arrayRowColumn = [];
-let divArray = []
-let changingRow;
-let changingDiv;
-
-// pushes how many divs are wanted into an empty array 
-for (let i = 0; i < number; i++){
-    arrayRowColumn.push(number)
-}
-
-// goes thru the array and creates divRows and then goes thru the loop and creates divs in each row
-for (let i in arrayRowColumn){
-    createRow();
+    // pushes how many board pieces are wanted, into an empty array to make game board 
+    function boardSetup(){
+        if (arrayRowColumn != 0 && divArray != 0){
+            arrayRowColumn = 0;
+            divArray = 0;
+        }
         for (let i = 0; i < number; i++){
-        createDiv();
+            arrayRowColumn.push(number)
+        }
+
+        // goes thru the array and creates divRows and then goes thru the loop and creates divs in each row
+        for (let i in arrayRowColumn){
+            createRow();
+                for (let i = 0; i < number; i++){
+                createDiv();
+            }
+        }
     }
-}
 
-// creates an individual div piece
-function createDiv(){
-    changingDiv = document.createElement("div");
-    changingDiv.setAttribute('class', 'changingDiv');
-    changingRow.appendChild(changingDiv);
-    console.log(changingDiv.length)
-    divArray.push(changingDiv) //pushes each div creation into an array called changingDiv   
-    for (let i = 0; i < divArray.length; i++){
-        divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
-        changingDiv.addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
+    // creates an individual div piece
+    function createDiv(){
+        changingDiv = document.createElement("div");
+        changingDiv.setAttribute('class', 'changingDiv');
+        changingRow.appendChild(changingDiv);
+        console.log(allDivs.length)
+        divArray.push(changingDiv) //pushes each div creation into an array called changingDiv   
+        for (let i = 0; i < divArray.length; i++){
+            divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
+            changingDiv.addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
 
+        }
     }
-}
 
-// creates the verticle divs to hold the individual divs
-function createRow(){
-    changingRow = document.createElement("div");
-    changingRow.setAttribute('class', 'changingRow');
-    main.appendChild(changingRow);
-    //changingRow.setAttribute('style','background-color:blue;border:3px solid; width:auto;height:auto;');
-    
-}
+    // creates the verticle divs to hold the individual divs
+    function createRow(){
+        changingRow = document.createElement("div");
+        changingRow.setAttribute('class', 'changingRow');
+        main.appendChild(changingRow);
+        //changingRow.setAttribute('style','background-color:blue;border:3px solid; width:auto;height:auto;');
+        console.log(allDivs.length)
+    }
 
+    function resetBoard2(){
+        number = prompt("how many squares would you like to play with? ");
+        changingRow.remove(allRows);
+        boardSetup();
+    }
 
-
-
-
-
-
-console.log(changingDiv)
-console.log(divArray)
-//changingDiv.addEventListener("mouseover", mouseOver, false);
-//console.log(changingDiv.length)
-//changingDiv.addEventListener("mouseout", mouseOut, false);
-//changingDiv.addEventListener('mouseover', e => e.target.classList.add('my-colour-class'))
-function mouseOver() {
+    function mouseOver() {
     changingDiv.style.color = "red";
+    }
+
+    function mouseOut() {
+        changingDiv.style.color = "blue";
+    }
 }
 
-function mouseOut() {
-    changingDiv.style.color = "blue";
+// removes game pieces and restarts
+function resetBoard(){ 
+    while (main.lastChild) {
+        main.removeChild(main.lastChild);
+    }
+    board()
 }
-
-
-
-
-
-
-
-
-
-
-
-console.log(changingDiv)
-//changingDiv.addEventListener("mouseover", mouseOver, false);
-//console.log(changingDiv.length)
-//changingDiv.addEventListener("mouseout", mouseOut, false);
-
-
-
-
-
+board();
 </script>
 
 </body>
