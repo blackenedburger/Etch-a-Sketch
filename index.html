@@ -65,7 +65,6 @@
         .changingDiv{
 
             background-color:rosybrown;
-            border:3px solid; 
             flex-grow: 1;
             height: 100%;
             width: 100%;
@@ -83,6 +82,7 @@
 
         .mouseOut{
             background-color: black;
+            opacity: 0.1;
         }
 </style>
 
@@ -93,7 +93,8 @@
 
     <div id="container">
         <div id="button">
-            <button id="resetButton" onclick="resetBoard()">Reset</button>
+            <button id="resetButton" claass="buttons" value="0">Reset with Random Colors</button>
+            <button id="resetButton2" class="buttons" value="1" >Reset </button>
         </div>
         <div id="main"></div>
     </div>
@@ -103,6 +104,9 @@
 
 
 <script>
+
+
+
 function board(){
     const main = document.getElementById("main");
     let number = prompt("how many squares would you like to play with? ");
@@ -113,41 +117,124 @@ function board(){
     let mainDiv = document.getElementById("main");
     const resetButton = document.getElementById("resetButton");
     let allRows = document.querySelectorAll(".changingRow");
-    let allDivs = document.querySelectorAll(".changingDiv"); 
-    boardSetup();
+    let allDivs = document.querySelectorAll(".changingDiv");
+    let buttons = document.getElementsByTagName("button"); 
+    let buttonChoice;
+
+    // sets up the buttons if they are clicked goes to different set ups
+    for (let i = 0; i < buttons.length; i++){
+            buttons[i].addEventListener("click", function(){
+                if (i === 0){
+                    resetBoard();
+                    buttonChoice = 0;
+                    number = prompt("how many squares would you like to play with? ");
+                    boardSetup()
+                } else if (i === 1){
+                    resetBoard();
+                    buttonChoice = 1;
+                    number = prompt("how many squares would you like to play with? ");
+                    boardSetup()
+                }
+            });
+        }
+        boardSetup();
 
     // pushes how many board pieces are wanted, into an empty array to make game board 
     function boardSetup(){
-        if (arrayRowColumn != 0 && divArray != 0){
-            arrayRowColumn = 0;
-            divArray = 0;
+        if (arrayRowColumn != [] && divArray != []){
+            arrayRowColumn = [];
+            divArray = [];
         }
-        for (let i = 0; i < number; i++){
-            arrayRowColumn.push(number)
-        }
-
-        // goes thru the array and creates divRows and then goes thru the loop and creates divs in each row
-        for (let i in arrayRowColumn){
-            createRow();
-                for (let i = 0; i < number; i++){
-                createDiv();
+        // if the left or right button is pressed or 
+        if (buttonChoice === 0 ){
+            for (let i = 0; i < number; i++){
+                arrayRowColumn.push(number)
+            }
+            // goes thru the array and creates divRows and then goes thru the loop and creates divs in each row
+            for (let i in arrayRowColumn){
+                createRow();
+                    for (let i = 0; i < number; i++){
+                    createDiv();
+                }
+            }
+        // if the right button is pressed
+        } else if (buttonChoice === 1){
+            for (let i = 0; i < number; i++){
+                arrayRowColumn.push(number)
+            }
+            for (let i in arrayRowColumn){
+                createRow();
+                    for (let i = 0; i < number; i++){
+                    createDiv2();
+                }
+            }
+        //  if the board first loads, it is the same as the left button reset
+        } else {
+            for (let i = 0; i < number; i++){
+                arrayRowColumn.push(number)
+            }
+            for (let i in arrayRowColumn){
+                createRow();
+                    for (let i = 0; i < number; i++){
+                    createDiv();
+                }
             }
         }
     }
 
-    // creates an individual div piece
+    // Creates random color div board and first loaded
     function createDiv(){
         changingDiv = document.createElement("div");
         changingDiv.setAttribute('class', 'changingDiv');
         changingRow.appendChild(changingDiv);
-        console.log(allDivs.length)
+        
+        divArray.push(changingDiv)   
+        for (let i = 0; i < divArray.length; i++){
+            divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
+            function random_color() {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.round(Math.random() * 15)];
+                }
+                return color;
+            }
+            divArray[i].addEventListener("mouseout", function () {
+                divArray[i].style.background = random_color();
+            })
+        }
+    }
+
+    // creates tinting div board 
+    function createDiv2(){
+        changingDiv = document.createElement("div");
+        changingDiv.setAttribute('class', 'changingDiv');
+        changingRow.appendChild(changingDiv);
         divArray.push(changingDiv) //pushes each div creation into an array called changingDiv   
         for (let i = 0; i < divArray.length; i++){
             divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
-            changingDiv.addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
+            //divArray[i].addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
+            divArray[i].addEventListener("mouseout", function () {
+                let tint = divArray[i].style.opacity;
+                if (tint != 1.0){
+                    tint = tint + 0.1;
+                }
+            }
 
-        }
+            /*
+            divArray[i].addEventListener('mouseout', function () {
+                divArray[i].style.background = 'yellow';
+                divArray[i].innrHTML = + counter;
+               //divArray[i].style.opacity =  + counter;
+                //( "p", this ).last().text( ++n );
+            })
+            */
+            )}
+            
+        
     }
+
+
 
     // creates the verticle divs to hold the individual divs
     function createRow(){
@@ -158,19 +245,14 @@ function board(){
         console.log(allDivs.length)
     }
 
-    function resetBoard2(){
-        number = prompt("how many squares would you like to play with? ");
-        changingRow.remove(allRows);
-        boardSetup();
+    function mouseOver2() {
+        changingDiv.style.color = "red";
     }
 
-    function mouseOver() {
-    changingDiv.style.color = "red";
+    function mouseOut2() {
+        changingDiv.style.color = "yellow";
     }
 
-    function mouseOut() {
-        changingDiv.style.color = "blue";
-    }
 }
 
 // removes game pieces and restarts
@@ -178,8 +260,17 @@ function resetBoard(){
     while (main.lastChild) {
         main.removeChild(main.lastChild);
     }
-    board()
+    //board()
 }
+
+
+
+
+
+
+
+
+
 board();
 </script>
 
