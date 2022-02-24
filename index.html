@@ -68,6 +68,7 @@
             flex-grow: 1;
             height: 100%;
             width: 100%;
+            opacity: 1.0;
         }
 
         button{
@@ -80,9 +81,13 @@
             background-color: blue;
         }
 
-        .mouseOut{
+        .mouseOver2{
+            background-color: white;
+        }
+
+        .onMouseOut2{
             background-color: black;
-            opacity: 0.1;
+            opacity: 10%;
         }
 </style>
 
@@ -187,7 +192,6 @@ function board(){
         changingDiv = document.createElement("div");
         changingDiv.setAttribute('class', 'changingDiv');
         changingRow.appendChild(changingDiv);
-        
         divArray.push(changingDiv)   
         for (let i = 0; i < divArray.length; i++){
             divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
@@ -209,29 +213,18 @@ function board(){
     function createDiv2(){
         changingDiv = document.createElement("div");
         changingDiv.setAttribute('class', 'changingDiv');
+        changingDiv.setAttribute('style','background-color:black;');
         changingRow.appendChild(changingDiv);
-        divArray.push(changingDiv) //pushes each div creation into an array called changingDiv   
-        for (let i = 0; i < divArray.length; i++){
-            divArray[i].addEventListener('mouseover', e => e.target.classList.add('mouseOver'))
-            //divArray[i].addEventListener('mouseout', e => e.target.classList.add('mouseOut'))
-            divArray[i].addEventListener("mouseout", function () {
-                let tint = divArray[i].style.opacity;
-                if (tint != 1.0){
-                    tint = tint + 0.1;
+        divArray.push(changingDiv) 
+        for (const item of divArray) { // attaches 10 mouseovers onto each div piece
+            let opacity = Number(item.style.opacity);  // changes it into a number, not a string
+            item.addEventListener('mouseover', () => { 
+                if(opacity < 1) {
+                    opacity += 0.1;
                 }
-            }
-
-            /*
-            divArray[i].addEventListener('mouseout', function () {
-                divArray[i].style.background = 'yellow';
-                divArray[i].innrHTML = + counter;
-               //divArray[i].style.opacity =  + counter;
-                //( "p", this ).last().text( ++n );
-            })
-            */
-            )}
-            
-        
+                item.style.opacity = opacity;
+            });
+        };
     }
 
 
@@ -241,17 +234,9 @@ function board(){
         changingRow = document.createElement("div");
         changingRow.setAttribute('class', 'changingRow');
         main.appendChild(changingRow);
-        //changingRow.setAttribute('style','background-color:blue;border:3px solid; width:auto;height:auto;');
-        console.log(allDivs.length)
     }
 
-    function mouseOver2() {
-        changingDiv.style.color = "red";
-    }
 
-    function mouseOut2() {
-        changingDiv.style.color = "yellow";
-    }
 
 }
 
@@ -260,7 +245,6 @@ function resetBoard(){
     while (main.lastChild) {
         main.removeChild(main.lastChild);
     }
-    //board()
 }
 
 
@@ -268,7 +252,11 @@ function resetBoard(){
 
 
 
-
+// to do
+// tool tips offering explanations over the buttons
+// seperate the js and css into different files
+// max 100 as a number
+//
 
 
 board();
