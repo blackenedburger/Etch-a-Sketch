@@ -1,18 +1,18 @@
 
 function board(){
     const main = document.getElementById("main");
-    let number = parseInt(prompt("Choose a number between 1 and 100 "));
-    if (number > 10){
-        number = prompt("Please choose a number between 1 and 100");
+    let number = parseInt(prompt("Choose a number between 1 and 30 "));
+    if (number > 30){
+        number = prompt("Please choose a number between 1 and 30");
     } else if (number < 1){
-        number = prompt("Please choose a number between 1 and 100");
+        number = prompt("Please choose a number between 1 and 30");
     }
     let arrayRowColumn = [];
     let divArray = []
     let changingRow;
     let changingDiv;
     let mainDiv = document.getElementById("main");
-    const resetButton = document.getElementById("resetButton");
+
     let allRows = document.querySelectorAll(".changingRow");
     let allDivs = document.querySelectorAll(".changingDiv");
     let buttons = document.getElementsByTagName("button"); 
@@ -25,30 +25,30 @@ function board(){
                     resetBoard();
                     buttonChoice = 0;
                     number = prompt("how many squares would you like to play with? ");
-                    if (number > 100){
-                        number = prompt("Please choose a number between 1 and 100");
+                    if (number > 30){
+                        number = prompt("Please choose a number between 1 and 30");
                     } else if (number < 1){
-                        number = prompt("Please choose a number between 1 and 100");
+                        number = prompt("Please choose a number between 1 and 30");
                     }
                     boardSetup()
                     } else if (i === 1){
                     resetBoard();
                     buttonChoice = 1;
                     number = prompt("how many squares would you like to play with? ");
-                    if (number > 100){
-                        number = prompt("Please choose a number between 1 and 100");
+                    if (number > 30){
+                        number = prompt("Please choose a number between 1 and 30");
                     } else if (number < 1){
-                        number = prompt("Please choose a number between 1 and 100");
+                        number = prompt("Please choose a number between 1 and 30");
                     }
                     boardSetup()
                 } else if (i === 2){
                     resetBoard();
                     buttonChoice = 2;
                     number = prompt("how many squares would you like to play with? ");
-                    if (number > 100){
-                        number = prompt("Please choose a number between 1 and 100");
+                    if (number > 30){
+                        number = prompt("Please choose a number between 1 and 30");
                     } else if (number < 1){
-                        number = prompt("Please choose a number between 1 and 100");
+                        number = prompt("Please choose a number between 1 and 30");
                     }
                     boardSetup()
                 }
